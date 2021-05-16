@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import Map from "./Map";
+import {Layers, TileLayer, VectorLayer} from "./Layers";
+import {osm, vector} from "./Source";
+import {fromLonLat, get} from 'ol/proj';
+import {Controls, FullScreenControl} from "./Controls";
 
-function App() {
+
+const App = () => {
+  const [center, setCenter] = useState([25.0136, 58.5953]);
+  const [zoom, setZoom] = useState(9);
+  const [showLayer, setShowLayer] = useState(true);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Map center={fromLonLat(center)} zoom={zoom}>
+        <Layers>
+          <TileLayer
+            source={osm()}
+            zIndex={0}
+          />
+          {showLayer && ( 
+            <VectorLayer />
+          )}
+        </Layers>
+        <Controls>
+          <FullScreenControl />
+        </Controls>
+      </Map>
+      <div>
+        <p id="distance"></p>
+        <p id="area"></p>
+        <p id="point"></p>
+      </div>
     </div>
   );
 }
