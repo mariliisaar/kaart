@@ -1,9 +1,7 @@
-import vector from "./vector";
-import xyz from "./xyz";
 import osm from "./osm";
+import Activity from "./activity";
 
 export {
-    vector,
-    xyz,
-    osm
+    osm,
+    Activity
 };
